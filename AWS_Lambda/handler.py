@@ -30,11 +30,17 @@ def lambda_handler(event, context):
             if result:
                 return {
                     'statusCode': 200,
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
+                    },
                     'body': json.dumps(result)
                 }
             else:
                 return {
                     'statusCode': 404,
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
+                    },
                     'body': json.dumps({'message': 'Zero Devices found'})
                 }
 
@@ -49,11 +55,17 @@ def lambda_handler(event, context):
             if result:
                 return {
                     'statusCode': 200,
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
+                    },
                     'body': json.dumps(result)
                 }
             else:
                 return {
                     'statusCode': 404,
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
+                    },
                     'body': json.dumps({'message': 'Device not found'})
                 }
 
@@ -83,6 +95,9 @@ def lambda_handler(event, context):
             results = cursor.fetchall()
             return {
                 'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 'body': json.dumps(results, default=str)
             }
         elif http_method == 'POST' and path == '/devices':
@@ -95,6 +110,9 @@ def lambda_handler(event, context):
                     if field not in new_device:
                         return {
                             'statusCode': 400,
+                            'headers': {
+                                'Access-Control-Allow-Origin': '*'
+                            },
                             'body': json.dumps({'message': f'Missing required field: {field}'})
                     }
             
@@ -106,6 +124,9 @@ def lambda_handler(event, context):
 
                 return {
                 'statusCode': 201,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 'body': json.dumps({'message': 'Device added successfully'})
                 }
             except Exception as e:
@@ -114,6 +135,9 @@ def lambda_handler(event, context):
                 print("Traceback:", traceback.format_exc())
                 return {
                 'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
                 'body': json.dumps({'message': error_message, 'traceback': traceback.format_exc()})
                 }
 
@@ -134,12 +158,18 @@ def lambda_handler(event, context):
             conn.commit()
             return {
                 'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
                 'body': json.dumps({'message': 'Device updated successfully'})
             }
 
         else:
             return {
                 'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
                 'body': json.dumps({'message': 'Invalid operation none of previous conditions satisfied {http_method}, {path}'})
             }
 
@@ -150,5 +180,8 @@ def lambda_handler(event, context):
         print("Traceback:", traceback.format_exc())  # Log the full traceback
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*'
+            },
             'body': json.dumps({'message': error_message, 'traceback': traceback.format_exc()})  
         }
