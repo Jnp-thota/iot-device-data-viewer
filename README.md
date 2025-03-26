@@ -1,8 +1,8 @@
 # Data Creation and Insertion of Data Details
 
-CREATE DATABASE your_database_name;
+CREATE DATABASE initial_db;
 
-USE intial_db;
+USE initial_db;
 
 CREATE TABLE `devices` (
   `device_id` bigint unsigned NOT NULL, 
