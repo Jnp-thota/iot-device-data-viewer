@@ -69,25 +69,42 @@ def lambda_handler(event, context):
                     'body': json.dumps({'message': 'Device not found'})
                 }
 
-        elif http_method == 'GET' and path == '/devices/time-series-data/{device_id+}':
-            # Fetch time-series data
+        elif http_method == 'DELETE' and path == '/devices/{device_id+}':
             device_id = event.get("pathParameters", {}).get("device_id")
+            cursor.execute("DELETE FROM devices WHERE device_id = %s", (device_id,))
+            if cursor.rowcount > 0:  # Check if a row was affected
+                conn.commit()
+                return {
+                    'statusCode': 200,
+                    'headers': {'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'message': 'Device deleted successfully'})
+                }
+            else:
+                return {
+                    'statusCode': 404,
+                    'headers': {'Access-Control-Allow-Origin': '*'},
+                    'body': json.dumps({'message': 'Device not found'})
+                }
+
+        elif http_method == 'GET' and path == '/timeseries':
+            # Fetch time-series data
+            device_id = event.get("queryStringParameters", {}).get("deviceId")
             # print(event.get("queryStringParameters",{}))
             # print("Data")
             # print(event.get("queryStringParameters"))
             # print(event.get("queryStringParameters", {})!=None)
-            if(event.get("queryStringParameters", {})!=None):
-                start_time = event.get("queryStringParameters", {}).get("start_time")
-                end_time = event.get("queryStringParameters", {}).get("end_time")
-                cursor.execute("""
-                    SELECT timestamp, metric_value
-                    FROM time_series_data
-                    WHERE device_id = %s AND timestamp BETWEEN %s AND %s
-                    ORDER BY timestamp
-                """, (device_id, start_time, end_time))
-            else:
-                cursor.execute("""
-                    SELECT timestamp, metric_value
+            # if(event.get("queryStringParameters", {})!=None):
+            #     start_time = event.get("queryStringParameters", {}).get("start_time")
+            #     end_time = event.get("queryStringParameters", {}).get("end_time")
+            #     cursor.execute("""
+            #         SELECT timestamp, metric_value
+            #         FROM time_series_data
+            #         WHERE device_id = %s AND timestamp BETWEEN %s AND %s
+            #         ORDER BY timestamp
+            #     """, (device_id, start_time, end_time))
+            # else:
+            cursor.execute("""
+                    SELECT *
                     FROM time_series_data
                     WHERE device_id = %s
                     ORDER BY timestamp
