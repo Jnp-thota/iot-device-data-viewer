@@ -40,8 +40,7 @@
 
 
 Architecture Diagram:
-		
-
+![alt text](iot_Device_Architecture.drawio_UTD-1.png)
 
 
 
