@@ -39,6 +39,10 @@
 
 
 
+Architecture Diagram:
+      ![alt text](iot_Device_Architecture.drawio.png)
+
+
 
 
 
