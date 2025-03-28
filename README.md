@@ -1,5 +1,6 @@
 # IOT Device Project:
-	Terminology:	Different sensor devices are placed in different type of rooms(Office, Living Room, BedRoom,..etc) our Project daily deals with collection all the sensor data from the sensors in the specific time interval and used this data to build a effective UI that help customer to monitor the device performance  and do some CURD operations if any new device added or any information related to device is changed.
+	Terminology:	Different sensor devices are placed in different type of rooms
+	(Office, Living Room, BedRoom,..etc) our Project daily deals with collection all the sensor data from the sensors in the specific time interval and used this data to build a effective UI that help customer to monitor the device performance  and do some CURD operations if any new device added or any information related to device is changed.
 
 # REST API built using API Gateway:
 	Device level API’s:
